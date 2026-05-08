@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Visit Results</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="visit.html">Add Visit</a>
+  <a href="view_visits.html">View Visits</a>
+  <a href="reports.html">Reports</a>
+</nav>
+
+<div class="container">
+  <h2>Results for "<%= location %>"</h2>
+
+  <div class="card">
+    <% if (visits.length === 0) { %>
+      <p>No visits found for "<%= location %>"</p>
+    <% } else { %>
+      <table border="1" cellpadding="8" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Location</th>
+            <th>Date</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% visits.forEach(v => { %>
+            <tr>
+              <td><%= v.id %></td>
+              <td><%= v.location %></td>
+              <td><%= v.date %></td>
+              <td><%= v.notes || '—' %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+
+    <br>
+    <a href="/view_visits.html">← Go Back</a>
+  </div>
+</div>
+
+</body>
+</html>

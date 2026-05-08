@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Visit</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="visit.html">Add Visit</a>
+  <a href="view_visits.html">View Visits</a>
+  <a href="reports.html">Reports</a>
+</nav>
+
+<div class="container">
+  <h2>Add Visit</h2>
+
+  <div class="card">
+
+    <!-- 🔹 FORM START -->
+    <form action="/add-visit" method="POST">
+
+      <input name="user_id" placeholder="User ID" required><br><br>
+
+      <input name="location_id" placeholder="Location ID" required><br><br>
+
+      <label>Check-in Time</label><br>
+      <input name="check_in" type="datetime-local" required><br><br>
+
+      <label>Check-out Time</label><br>
+      <input name="check_out" type="datetime-local" required><br><br>
+
+      <button type="submit">Submit</button>
+
+    </form>
+    <!-- 🔹 FORM END -->
+
+  </div>
+</div>
+
+</body>
+</html>
