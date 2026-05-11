@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home | Location Logger</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="pin"><div></div></div>
+      LocLogger
+    </a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="addvisit.html"  class="active">Add Visit</a></li>
+        <li><a href="ViewVisit.html">View Visits</a></li>
+        <li><a href="/UpdateVisit.html" >Update Visits</a></li>
+        <li><a href="DeleteVisit.html">Delete Visits</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <h1>📍 Personal Location Logger</h1>
+
+  <div class="card">
+    <p>Welcome! Use this system to track your location visits.</p>
+
+    <ul>
+      <li>📌 Add new visit logs</li>
+      <li>📊 View your history</li>
+      <li>📈 Analyze reports</li>
+    </ul>
+
+    <!-- 🔹 FORM ADDED -->
+    <h3>Add Quick Visit</h3>
+    <form action="/api/visits" method="POST">
+      <input type="text" name="location" placeholder="Location" required><br><br>
+      <input type="date" name="date" required><br><br>
+      <input type="text" name="notes" placeholder="Notes"><br><br>
+      <button type="submit">Add Visit</button>
+    </form>
+
+    <div class="actions">
+      <a href="Visit.html" class="btn">Visit</a>
+      <a href="ViewVisit.html" class="btn">View Visits</a>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>

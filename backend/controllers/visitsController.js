@@ -35,6 +35,15 @@ export const getVisits = async (req, res) => {
     }
 };
 
+export const getAllVisits = async (req, res) => {
+    try {
+        const result = await sql.query`SELECT * FROM Visits ORDER BY date DESC`;
+        res.json(result.recordset);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+};
+
 // Delete Visit
 export const deleteVisit = async (req, res) => {
     try {
