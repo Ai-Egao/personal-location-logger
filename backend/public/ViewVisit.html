@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>View Visits</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="Style.css">
 </head>
 <body>
 
@@ -32,33 +32,14 @@
     <!-- 🔹 SEARCH / FILTER FORM (GET) -->
    <form action="/api/visits" method="GET">
   <input type="text" name="location" placeholder="Location">
-  <button type="submit">Search</button>
+  <button  class="btn-muz btn-ghost" type="submit">Search</button>
 </form>
 
     <hr>
 
-    <!-- 🔹 BACKEND WILL RENDER VISITS HERE -->
-    <!-- Example static structure (replace with server-side rendering later) -->
+ 
 
-    <ul>
-      <li>
-        <b>Location Name</b><br>
-        Check-in: 2025-01-01 10:00<br>
-        Check-out: 2025-01-01 12:00
-
-        <!-- 🔸 DELETE FORM -->
-        <form action="/visits/delete" method="POST" style="display:inline;">
-          <input type="hidden" name="visit_id" value="1">
-          <button type="submit">Delete</button>
-        </form>
-
-        <!-- 🔸 UPDATE FORM -->
-        <form action="/visits/update" method="POST" style="display:inline;">
-          <input type="hidden" name="visit_id" value="1">
-          <button type="submit">Edit</button>
-        </form>
-      </li>
-    </ul>
+ 
 
   </div>
 </div>

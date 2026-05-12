@@ -62,11 +62,13 @@ export const deleteVisit = async (req, res) => {
 // Update Visit
 export const updateVisit = async (req, res) => {
     try {
-        const { visit_id, location, date } = req.body;
+        const { visit_id, location, date, notes } = req.body;  // add notes
 
         await sql.query`
             UPDATE Visits
-            SET location = ${location}, date = ${date}
+            SET location = ${location},
+                date     = ${date},
+                notes    = ${notes}          
             WHERE id = ${visit_id}
         `;
 

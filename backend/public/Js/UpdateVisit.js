@@ -1,6 +1,6 @@
 const API_BASE = 'http://localhost:3000/api';
 
-let editingId = null; // track which row is currently being edited
+let editingId = null;
 
 /* ══════════════════════════════════
    LOAD
@@ -40,14 +40,22 @@ function buildRow(v) {
   tr.dataset.location = (v.location || '').toLowerCase();
   tr.dataset.notes    = (v.notes    || '').toLowerCase();
 
-  const date = v.date
+  // Store the raw ISO date on the row so we can send it back on save
+  tr.dataset.date = v.date ? v.date : '';
+
+  const displayDate = v.date
     ? new Date(v.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
     : '—';
 
   tr.innerHTML = `
     <td><span class="id-badge">#${v.id}</span></td>
-    <td class="cell-location"><span class="location-name">${esc(v.location || '—')}</span></td>
-    <td><span class="date-cell">${date}</span></td>
+    <td class="cell-location">
+      <div class="location-cell">
+        <div class="location-dot"></div>
+        <span class="location-name">${esc(v.location || '—')}</span>
+      </div>
+    </td>
+    <td><span class="date-cell">${displayDate}</span></td>
     <td class="cell-notes hide-mobile">
       <span class="notes-cell ${v.notes ? '' : 'empty'}">${v.notes ? esc(v.notes) : 'No notes'}</span>
     </td>
@@ -62,18 +70,15 @@ function buildRow(v) {
    INLINE EDIT — START
 ══════════════════════════════════ */
 function startEdit(id, row) {
-  // Cancel any other open edit first
   if (editingId && editingId !== id) cancelEdit();
 
   editingId = id;
   row.classList.add('editing');
 
-  // Grab current values from the display spans
   const currentLocation = row.querySelector('.location-name').textContent.trim();
   const currentNotes    = row.querySelector('.notes-cell').textContent.trim();
   const notesVal        = currentNotes === 'No notes' ? '' : currentNotes;
 
-  // Replace cells with inputs
   row.querySelector('.cell-location').innerHTML = `
     <input
       class="inline-input"
@@ -94,14 +99,12 @@ function startEdit(id, row) {
       onkeydown="handleKey(event, ${id}, this.closest('tr'))"
     />`;
 
-  // Replace action buttons
   row.querySelector('.action-cell').innerHTML = `
     <div class="edit-actions">
-      <button class="btn-save"   onclick="saveEdit(${id}, this.closest('tr'))">✓ Save</button>
+      <button class="btn-save"        onclick="saveEdit(${id}, this.closest('tr'))">✓ Save</button>
       <button class="btn-cancel-edit" onclick="cancelEdit()">✕</button>
     </div>`;
 
-  // Focus location input
   document.getElementById(`edit-location-${id}`).focus();
 }
 
@@ -115,6 +118,9 @@ async function saveEdit(id, row) {
   const location = locationInput.value.trim();
   const notes    = notesInput.value.trim();
 
+  // Preserve the original date stored on the row — never wipe it
+  const date = row.dataset.date || null;
+
   if (!location) {
     locationInput.classList.add('input-error');
     locationInput.placeholder = 'Location is required';
@@ -122,7 +128,6 @@ async function saveEdit(id, row) {
     return;
   }
 
-  // Disable inputs while saving
   locationInput.disabled = true;
   notesInput.disabled    = true;
   row.querySelector('.btn-save').disabled        = true;
@@ -133,22 +138,20 @@ async function saveEdit(id, row) {
     const res = await fetch(`${API_BASE}/visits/update`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ visit_id: id, location, notes })
+      body: JSON.stringify({ visit_id: id, location, notes, date })  // send all three
     });
 
     if (!res.ok) throw new Error(`Server returned ${res.status}`);
 
-    // Rebuild the row with updated values — keep the date from the existing span
-    const dateText = row.querySelector('.date-cell')
-      ? row.querySelector('.date-cell').textContent
-      : '—';
-
     editingId = null;
     row.classList.remove('editing', 'saving');
 
-    // Restore display cells
+    // Restore display cells with updated values
     row.querySelector('.cell-location').innerHTML = `
-      <span class="location-name">${esc(location)}</span>`;
+      <div class="location-cell">
+        <div class="location-dot"></div>
+        <span class="location-name">${esc(location)}</span>
+      </div>`;
 
     row.querySelector('.cell-notes').innerHTML = `
       <span class="notes-cell ${notes ? '' : 'empty'}">${notes ? esc(notes) : 'No notes'}</span>`;
@@ -156,7 +159,7 @@ async function saveEdit(id, row) {
     row.querySelector('.action-cell').innerHTML = `
       <button class="btn-edit" onclick="startEdit(${id}, this.closest('tr'))">✏️ Edit</button>`;
 
-    // Update search data attributes
+    // Keep search attributes up to date
     row.dataset.location = location.toLowerCase();
     row.dataset.notes    = notes.toLowerCase();
 
@@ -180,7 +183,6 @@ async function saveEdit(id, row) {
 ══════════════════════════════════ */
 function cancelEdit() {
   if (!editingId) return;
-  // Simply reload the table to restore original values cleanly
   editingId = null;
   loadVisits();
 }

@@ -28,30 +28,24 @@
 </header>
 
 <main class="container">
-  <h1>📍 Personal Location Logger</h1>
+  <h1 style="margin-left: 300px; margin-bottom: 20px;">📍 ADD YOUR LOCATION</h1>
 
-  <div class="card">
-    <p>Welcome! Use this system to track your location visits.</p>
-
-    <ul>
-      <li>📌 Add new visit logs</li>
-      <li>📊 View your history</li>
-      <li>📈 Analyze reports</li>
-    </ul>
+  <div class="card">   
 
     <!-- 🔹 FORM ADDED -->
-    <h3>Add Quick Visit</h3>
+     <div  class="page-header" >
+  <div  class="page-header-text">
+<h3  style="margin-left: 380px;">Add Quick Visit</h3>
+  </div>
+    </div>
     <form action="/api/visits" method="POST">
       <input type="text" name="location" placeholder="Location" required><br><br>
       <input type="date" name="date" required><br><br>
       <input type="text" name="notes" placeholder="Notes"><br><br>
-      <button type="submit">Add Visit</button>
+      <button type="submit" class="btn-ghost">Add Visit</button>
     </form>
 
-    <div class="actions">
-      <a href="Visit.html" class="btn">Visit</a>
-      <a href="ViewVisit.html" class="btn">View Visits</a>
-    </div>
+    
   </div>
 </main>
 

@@ -2,16 +2,27 @@
 <html>
 <head>
   <title>Visit Results</title>
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/Style.css">
 </head>
 <body>
 
-<nav>
-  <a href="index.html">Home</a>
-  <a href="visit.html">Add Visit</a>
-  <a href="view_visits.html">View Visits</a>
-  <a href="reports.html">Reports</a>
-</nav>
+<header>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="pin"><div></div></div>
+      LocLogger
+    </a>
+    <nav>
+      <ul>
+        <li><a href="/index.html"  >Home</a></li>
+        <li><a href="/addvisit.html">Add Visit</a></li>
+        <li><a href="/ViewVisit.html">View Visits</a></li>
+        <li><a href="/UpdateVisit.html" >Update Visits</a></li>
+        <li><a href="/DeleteVisit.html" >Delete Visits</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
 <div class="container">
   <h2>Results for "<%= location %>"</h2>
@@ -43,7 +54,7 @@
     <% } %>
 
     <br>
-    <a href="/ViewVisit.html">← Go Back</a>
+    <a href="/ViewVisit.html" class="btn-ghost">← Go Back</a>
   </div>
 </div>
 

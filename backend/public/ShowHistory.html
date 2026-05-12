@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>View Visits | Location Logger</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/Style.css">
+</head>
+
+<body>
+
+<!-- NAV -->
+<header>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="pin"><div></div></div>
+      LocLogger
+    </a>
+    <nav>
+      <ul>
+        <li><a href="index.html"  >Home</a></li>
+        <li><a href="addvisit.html">Add Visit</a></li>
+        <li><a href="ViewVisit.html">View Visits</a></li>
+        <li><a href="/UpdateVisit.html" >Update Visits</a></li>
+        <li><a href="DeleteVisit.html" >Delete Visits</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-text">
+    <h1>📋 Visit History</h1>
+    <p>A read-only log of all your recorded visits.</p>
+  </div>
+  <a href="/visit.html" class="btn-primary">+ Add Visit</a>
+</div>
+
+<!-- ERROR BANNER -->
+<div class="error-banner" id="errorBanner">
+  <div class="error-banner-inner">
+    ⚠️ <span id="errorMsg">Could not load visits. Make sure your server is running.</span>
+  </div>
+</div>
+
+<!-- SEARCH + COUNT -->
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="🔍  Search by location or notes…" oninput="filterTable()">
+  <div class="visit-count" id="visitCount" style="display:none;">
+    Showing <span id="visibleCount">0</span> of <span id="totalCount">0</span> visits
+  </div>
+</div>
+
+<!-- TABLE -->
+<div class="table-wrapper">
+  <div class="table-card">
+
+    <div class="loading-state" id="loadingState">
+      <div class="spinner"></div>
+      <p>Fetching visits…</p>
+    </div>
+
+    <div id="tableContainer" style="display:none;">
+      <table id="visitsTable">
+        <thead>
+          <tr>
+            <th style="width:70px;">ID</th>
+            <th>Location</th>
+            <th style="width:140px;">Date</th>
+            <th class="hide-mobile">Notes</th>
+          </tr>
+        </thead>
+        <tbody id="visitsBody"></tbody>
+      </table>
+
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">📭</div>
+        <h3>No visits yet</h3>
+        <p>Start by logging your first visit.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  Personal Location Logger — your data stays on your device
+</footer>
+
+<script src="Js/ShowHistory.js"></script>
+
+</body>
+</html>
